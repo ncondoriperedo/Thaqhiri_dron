@@ -1,0 +1,588 @@
+#VRML_SIM R2025a utf8
+PROTO thaiquiri [
+  field SFVec3f     translation  0 0 0
+  field SFRotation  rotation     1 0 0 1.5708
+  field SFString    controller   "<generic>"
+  field SFBool      headlightOn  TRUE
+]
+{
+  DEF drone Robot {
+  translation IS translation
+  rotation IS rotation
+  children [
+    # Forward-facing onboard survey lamp; physical illumination is rendered
+    # by Webots before either stereo camera acquires its image.
+    SpotLight {
+      on IS headlightOn
+      location 0 0.39 0.18
+      direction 0 0 1
+      color 1 0.95 0.85
+      intensity 2
+      attenuation 1 0 0
+      beamWidth 0.65
+      cutOffAngle 1.05
+      radius 12
+    }
+    DEF extra_components Solid {
+      translation -0.03 0.322 0
+      boundingObject Box {
+        size 0.15 0.04 0.15
+      }
+      physics Physics {
+        density -1
+        mass 0.376
+      }
+    }
+    DEF wires CadShape {
+      url [
+        "./meshes/wires.obj"
+      ]
+    }
+    DEF stm_interface CadShape {
+      url [
+        "./meshes/stm_interface.obj"
+      ]
+    }
+    DEF dc_regulator CadShape {
+      url [
+        "./meshes/DC_regulator.obj"
+      ]
+    }
+    DEF esc_mosfet CadShape {
+      url [
+        "./meshes/esc mosfet.obj"
+      ]
+    }
+    DEF gas_amplifier CadShape {
+      url [
+        "./meshes/gas_amplifier.obj"
+      ]
+    }
+    DEF gas_sensor CadShape {
+      url [
+        "./meshes/gas_sensor.obj"
+      ]
+    }
+    DEF jetson CadShape {
+      url [
+        "./meshes/jetson.obj"
+      ]
+    }
+    DEF cube_power CadShape {
+      url [
+        "./meshes/cube_power_module.obj"
+      ]
+    }
+    DEF antenna Solid {
+      translation 0.0005 0.3785 -0.0988
+      name "antenna"
+      boundingObject Group {
+        children [
+          Pose {
+            translation 0 0.07 -0.027
+            rotation 1 0 0 -1.5707953071795862
+            children [
+              Cylinder {
+                height 0.12
+                radius 0.005
+              }
+            ]
+          }
+          Box {
+            size 0.017 0.019 0.075
+          }
+        ]
+      }
+      physics Physics {
+        density -1
+        mass 0.05985
+      }
+    }
+    DEF antenna CadShape {
+      url [
+        "./meshes/telemetry_whip.obj"
+      ]
+    }
+    DEF battery Solid {
+      translation 0 0.262 -0.025
+      name "battery"
+      boundingObject Box {
+        size 0.102 0.05 0.173
+      }
+      physics Physics {
+        density -1
+        mass 0.84
+      }
+    }
+    DEF cube_orange CadShape {
+      url [
+        "./meshes/cube_flight_controller.obj"
+      ]
+    }
+    DEF battery CadShape {
+      url [
+        "./meshes/battery.obj"
+      ]
+    }
+    DEF cube_orange Solid {
+      translation 0.093 0.325 0.042
+      children [
+        DEF gyro_cube Gyro {
+          name "gyro_cube"
+        }
+        DEF accelerometer_cube Accelerometer {
+          name "accelerometer_cube"
+        }
+        DEF altimeter_cube Altimeter {
+          name "altimeter_cube"
+        }
+        DEF compass_cube Compass {
+          name "compass_cube"
+        }
+      ]
+      name "cube_orange"
+      boundingObject Pose {
+        children [
+          Box {
+            size 0.03 0.03 0.03
+          }
+        ]
+      }
+      physics Physics {
+        density -1
+        mass 0.073
+      }
+    }
+    DEF ZED_X_Mini Pose {
+      children [
+        DEF ZED_X_Mini CadShape {
+          url [
+            "./meshes/camera.obj"
+          ]
+        }
+      ]
+    }
+    DEF ZED_X_Mini_camera Solid {
+      translation 0 0.38 0.14
+      children [
+        DEF camera_left Camera {
+          translation -0.025 0.003 0
+          rotation 0.5773509358560258 -0.577349935856137 0.577349935856137 2.09439
+          name "camera_left"
+          fieldOfView 1.91986
+          width 640
+          height 480
+          near 0.1
+          far 20
+        }
+        DEF camera_right Camera {
+          translation 0.025 0.003 0
+          rotation 0.5773509358560258 -0.577349935856137 0.577349935856137 2.09439
+          name "camera_right"
+          fieldOfView 1.91986
+          width 640
+          height 480
+          near 0.1
+          far 20
+        }
+      ]
+      name "ZED_X_Mini_camera"
+      boundingObject Pose {
+        translation 0 0.004 -0.029
+        children [
+          Box {
+            size 0.093 0.028 0.05
+          }
+        ]
+      }
+      physics Physics {
+        density -1
+        mass 0.7
+      }
+    }
+    DEF lidar_livox Lidar {
+      translation 0 0.43 0
+      rotation 1 0 0 1.5708
+      children [
+        DEF accelerometer_livox Accelerometer {
+          name "accelerometer_livox"
+        }
+        DEF gyro_livox Gyro {
+          name "gyro_livox"
+        }
+      ]
+      name "lidar_livox"
+      boundingObject Pose {
+        translation 0.0005 0.0045 0.023
+        children [
+          Cylinder {
+            height 0.036
+            radius 0.055
+          }
+        ]
+      }
+      physics Physics {
+        density -1
+        mass 0.265
+      }
+      horizontalResolution 1000
+      fieldOfView 6.28318
+      verticalFieldOfView 1.02974
+      numberOfLayers 40
+      minRange 0.1
+      maxRange 40
+      type "rotating"
+      noise 0.0001
+      resolution 0.001
+    }
+    DEF livox_lidar Pose {
+      children [
+        DEF livox_lidar CadShape {
+          url [
+            "./meshes/lidar.obj"
+          ]
+        }
+      ]
+    }
+    DEF motor_rear_right Pose {
+      translation -0.592 0 0
+      children [
+        DEF motor_rear_right CadShape {
+          url [
+            "./meshes/motor.obj"
+          ]
+        }
+      ]
+    }
+    DEF motor_front_right Pose {
+      translation -0.592 0 0.592
+      children [
+        DEF motor_front_right CadShape {
+          url [
+            "./meshes/motor.obj"
+          ]
+        }
+      ]
+    }
+    DEF motor_front_left Pose {
+      translation 0 0 0.592
+      children [
+        DEF motor_front_left CadShape {
+          url [
+            "./meshes/motor.obj"
+          ]
+        }
+      ]
+    }
+    DEF propeller_rear_right Propeller {
+      shaftAxis 0 1 0
+      centerOfThrust -0.2975 0.38 -0.295
+      thrustConstants -4.43e-05 0
+      torqueConstants 1.4e-06 0
+      device DEF motor_propeller_rear_right RotationalMotor {
+        name "motor_propeller_rear_right"
+        maxVelocity 930
+        # Webots Propeller uses min(acceleration, maxTorque) for kinematic spin-up.
+        acceleration 2000
+        maxTorque 2000
+      }
+      fastHelix Solid {
+        translation -0.2975 0.38 -0.295
+        children [
+          CadShape {
+            url [
+              "./meshes/propeller_2.obj"
+            ]
+          }
+        ]
+        boundingObject Pose {
+          rotation 1 0 0 1.5708
+          children [
+            Cylinder {
+              height 0.005
+              radius 0.217
+            }
+          ]
+        }
+        physics Physics {
+          density -1
+          mass 0.005
+        }
+      }
+      slowHelix Solid {
+        translation -0.2975 0.38 -0.295
+        children [
+          CadShape {
+            url [
+              "./meshes/propeller_2.obj"
+            ]
+          }
+        ]
+        boundingObject Pose {
+          rotation 1 0 0 1.5708
+          children [
+            Cylinder {
+              height 0.005
+              radius 0.217
+            }
+          ]
+        }
+        physics Physics {
+          density -1
+          mass 0.005
+        }
+      }
+    }
+    DEF propeller_rear_left Propeller {
+      shaftAxis 0 1 0
+      centerOfThrust 0.2975 0.38 -0.295
+      thrustConstants 4.43e-05 0
+      torqueConstants 1.4e-06 0
+      device DEF motor_propeller_rear_left RotationalMotor {
+        name "motor_propeller_rear_left"
+        maxVelocity 930
+        acceleration 2000
+        maxTorque 2000
+      }
+      fastHelix Solid {
+        translation 0.2975 0.38 -0.295
+        children [
+          CadShape {
+            url [
+              "./meshes/propeller_2.obj"
+            ]
+          }
+        ]
+        boundingObject Pose {
+          rotation 1 0 0 1.5708
+          children [
+            Cylinder {
+              height 0.005
+              radius 0.217
+            }
+          ]
+        }
+        physics Physics {
+          density -1
+          mass 0.005
+        }
+      }
+      slowHelix Solid {
+        translation 0.2975 0.38 -0.295
+        children [
+          CadShape {
+            url [
+              "./meshes/propeller_2.obj"
+            ]
+          }
+        ]
+        boundingObject Pose {
+          rotation 1 0 0 1.5708
+          children [
+            Cylinder {
+              height 0.005
+              radius 0.217
+            }
+          ]
+        }
+        physics Physics {
+          density -1
+          mass 0.005
+        }
+      }
+    }
+    DEF propeller_front_right Propeller {
+      shaftAxis 0 1 0
+      centerOfThrust -0.2975 0.38 0.295
+      thrustConstants 4.43e-05 0
+      torqueConstants 1.4e-06 0
+      device DEF motor_propeller_front_right RotationalMotor {
+        name "motor_propeller_front_right"
+        maxVelocity 930
+        acceleration 2000
+        maxTorque 2000
+      }
+      fastHelix Solid {
+        translation -0.2975 0.38 0.295
+        children [
+          CadShape {
+            url [
+              "./meshes/propeller_2.obj"
+            ]
+          }
+        ]
+        boundingObject Pose {
+          rotation 1 0 0 1.5708
+          children [
+            Cylinder {
+              height 0.005
+              radius 0.217
+            }
+          ]
+        }
+        physics Physics {
+          density -1
+          mass 0.005
+        }
+      }
+      slowHelix Solid {
+        translation -0.2975 0.38 0.295
+        children [
+          CadShape {
+            url [
+              "./meshes/propeller_2.obj"
+            ]
+          }
+        ]
+        boundingObject Pose {
+          rotation 1 0 0 1.5708
+          children [
+            Cylinder {
+              height 0.005
+              radius 0.217
+            }
+          ]
+        }
+        physics Physics {
+          density -1
+          mass 0.005
+        }
+      }
+    }
+    DEF propeller_front_left Propeller {
+      shaftAxis 0 1 0
+      centerOfThrust 0.2975 0.38 0.295
+      thrustConstants -4.43e-05 0
+      torqueConstants 1.4e-06 0
+      device DEF motor_propeller_front_left RotationalMotor {
+        name "motor_propeller_front_left"
+        maxVelocity 930
+        acceleration 2000
+        maxTorque 2000
+      }
+      fastHelix Solid {
+        translation 0.2975 0.38 0.295
+        children [
+          CadShape {
+            url [
+              "./meshes/propeller_2.obj"
+            ]
+          }
+        ]
+        boundingObject Pose {
+          rotation 1 0 0 1.5708
+          children [
+            Cylinder {
+              height 0.005
+              radius 0.217
+            }
+          ]
+        }
+        physics Physics {
+          density -1
+          mass 0.005
+        }
+      }
+      slowHelix Solid {
+        translation 0.2975 0.38 0.295
+        children [
+          CadShape {
+            url [
+              "./meshes/propeller_2.obj"
+            ]
+          }
+        ]
+        boundingObject Pose {
+          rotation 1 0 0 1.5708
+          children [
+            Cylinder {
+              height 0.005
+              radius 0.217
+            }
+          ]
+        }
+        physics Physics {
+          density -1
+          mass 0.005
+        }
+      }
+    }
+    DEF motor_rear_left_bb Solid {
+      translation 0.295 0.346 -0.295
+      rotation 1 0 0 -1.5707953071795862
+      name "motor_1_bb"
+      boundingObject Cylinder {
+        height 0.04
+        radius 0.027
+      }
+      physics Physics {
+        density -1
+        mass 0.16
+      }
+    }
+    DEF motor_rear_right_bb Solid {
+      translation -0.297 0.346 -0.295
+      rotation 1 0 0 -1.5707953071795862
+      name "motor_2_bb"
+      boundingObject Cylinder {
+        height 0.04
+        radius 0.027
+      }
+      physics Physics {
+        density -1
+        mass 0.16
+      }
+    }
+    DEF motor_front_right_bb Solid {
+      translation -0.297 0.346 0.297
+      rotation 1 0 0 -1.5707953071795862
+      name "motor_front_right_bb"
+      boundingObject Cylinder {
+        height 0.04
+        radius 0.027
+      }
+      physics Physics {
+        density -1
+        mass 0.16
+      }
+    }
+    DEF motor_front_left_bb Solid {
+      translation 0.295 0.346 0.297
+      rotation 1 0 0 -1.5707953071795862
+      name "motor_front_left_bb"
+      boundingObject Cylinder {
+        height 0.04
+        radius 0.027
+      }
+      physics Physics {
+        density -1
+        mass 0.16
+      }
+    }
+    DEF motor_rear_left CadShape {
+      url [
+        "./meshes/motor.obj"
+      ]
+    }
+    DEF base CadShape {
+      url [
+        "./meshes/frame.obj"
+      ]
+    }
+  ]
+  name "drone"
+  boundingObject Pose {
+    translation 0 0.155 0
+    children [
+      Box {
+        size 0.36 0.25 0.53
+      }
+    ]
+  }
+  physics Physics {
+    density -1
+    mass 1
+  }
+  controller IS controller
+  }
+}

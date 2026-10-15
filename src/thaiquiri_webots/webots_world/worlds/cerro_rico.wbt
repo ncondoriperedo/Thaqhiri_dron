@@ -1,0 +1,44 @@
+#VRML_SIM R2025a utf8
+
+EXTERNPROTO "../protos/CerroRico.proto"
+EXTERNPROTO "../protos/thaiquiri.proto"
+
+WorldInfo {
+  basicTimeStep 8
+  randomSeed 42
+  defaultDamping Damping {
+    linear 0.5
+    angular 0.5
+  }
+}
+Viewpoint {
+  orientation 0.338 0.156 0.928 2.35
+  position 2.8 0.5 2.5
+}
+Background {
+  skyColor [ 0.015 0.015 0.02 ]
+}
+DEF MINE CerroRico { }
+# A documented launch fixture above the rough floor at the Blender spawn marker.
+# It provides a repeatable level IMU initialization; it is not part of the mine mesh.
+DEF LAUNCH_PAD Solid {
+  translation 0 3 0.16
+  name "SIL level launch pad"
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0.18 0.22 0.24
+        roughness 0.9
+        metalness 0
+      }
+      geometry Box { size 1.15 1.15 0.08 }
+    }
+  ]
+  boundingObject Box { size 1.15 1.15 0.08 }
+}
+DEF drone thaiquiri {
+  translation 0 3 0.205
+  # Native x=left, y=up, z=forward; forward points down the +Y mine corridor.
+  rotation 0 0.7071067811865476 0.7071067811865476 3.141592653589793
+  controller "<extern>"
+}
