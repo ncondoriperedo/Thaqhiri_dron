@@ -1,9 +1,0 @@
-source;share/thaiquiri_webots/hook/pythonpath.ps1
-source;share/thaiquiri_webots/hook/pythonpath.dsv
-source;share/thaiquiri_webots/hook/pythonpath.sh
-source;share/thaiquiri_webots/hook/ament_prefix_path.ps1
-source;share/thaiquiri_webots/hook/ament_prefix_path.dsv
-source;share/thaiquiri_webots/hook/ament_prefix_path.sh
-source;../../build/thaiquiri_webots/share/thaiquiri_webots/hook/pythonpath_develop.ps1
-source;../../build/thaiquiri_webots/share/thaiquiri_webots/hook/pythonpath_develop.dsv
-source;../../build/thaiquiri_webots/share/thaiquiri_webots/hook/pythonpath_develop.sh
